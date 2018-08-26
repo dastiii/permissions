@@ -77,7 +77,33 @@ class HasGroupsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_remove_a_user_from_a_group()
+    public function it_can_add_multiple_users_to_a_group_at_once()
+    {
+        $this->assertFalse($this->user->getAttribute('groups')->contains($this->group));
+        $this->assertFalse($this->user->getAttribute('groups')->contains($this->anotherGroup));
+
+        $this->user->addToGroups($this->group, $this->anotherGroup);
+
+        $this->assertTrue($this->user->fresh()->getAttribute('groups')->contains($this->group));
+        $this->assertTrue($this->user->fresh()->getAttribute('groups')->contains($this->anotherGroup));
+    }
+
+    /** @test */
+    public function it_can_add_multiple_users_to_a_group_at_once_as_array()
+    {
+        $this->assertFalse($this->user->getAttribute('groups')->contains($this->group));
+        $this->assertFalse($this->user->getAttribute('groups')->contains($this->anotherGroup));
+
+        $this->user->addToGroups([$this->group, $this->anotherGroup]);
+
+        $this->assertTrue($this->user->fresh()->getAttribute('groups')->contains($this->group));
+        $this->assertTrue($this->user->fresh()->getAttribute('groups')->contains($this->anotherGroup));
+    }
+
+
+
+    /** @test */
+    public function it_can_remove_a_user_from_a_group_using_the_group_instance()
     {
         $this->assertTrue($this->userWithGroups->getAttribute('groups')->contains($this->group));
 
@@ -86,4 +112,47 @@ class HasGroupsTest extends TestCase
         $this->assertFalse($this->userWithGroups->fresh()->getAttribute('groups')->contains($this->group));
     }
 
+    /** @test */
+    public function it_can_remove_a_user_from_a_group_using_the_groups_id()
+    {
+        $this->assertTrue($this->userWithGroups->getAttribute('groups')->contains($this->group));
+
+        $this->userWithGroups->removeFromGroup($this->group->getAttribute('id'));
+
+        $this->assertFalse($this->userWithGroups->fresh()->getAttribute('groups')->contains($this->group));
+    }
+
+    /** @test */
+    public function it_can_remove_a_user_from_a_group_using_the_groups_name()
+    {
+        $this->assertTrue($this->userWithGroups->getAttribute('groups')->contains($this->group));
+
+        $this->userWithGroups->removeFromGroup($this->group->getAttribute('name'));
+
+        $this->assertFalse($this->userWithGroups->fresh()->getAttribute('groups')->contains($this->group));
+    }
+
+    /** @test */
+    public function it_can_remove_multiple_groups_from_a_user_at_once()
+    {
+        $this->assertTrue($this->userWithGroups->getAttribute('groups')->contains($this->group));
+        $this->assertTrue($this->userWithGroups->getAttribute('groups')->contains($this->anotherGroup));
+
+        $this->userWithGroups->removeFromGroups($this->group, $this->anotherGroup);
+
+        $this->assertFalse($this->userWithGroups->fresh()->getAttribute('groups')->contains($this->group));
+        $this->assertFalse($this->userWithGroups->fresh()->getAttribute('groups')->contains($this->anotherGroup));
+    }
+
+    /** @test */
+    public function it_can_remove_multiple_groups_from_a_user_at_once_using_an_array()
+    {
+        $this->assertTrue($this->userWithGroups->getAttribute('groups')->contains($this->group));
+        $this->assertTrue($this->userWithGroups->getAttribute('groups')->contains($this->anotherGroup));
+
+        $this->userWithGroups->removeFromGroups([$this->group, $this->anotherGroup]);
+
+        $this->assertFalse($this->userWithGroups->fresh()->getAttribute('groups')->contains($this->group));
+        $this->assertFalse($this->userWithGroups->fresh()->getAttribute('groups')->contains($this->anotherGroup));
+    }
 }

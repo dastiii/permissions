@@ -37,8 +37,12 @@ class HasRolesTest extends TestCase
             'password' => bcrypt('secret'),
         ]);
 
-        $this->userWithRoles->roles()
-            ->attach([$this->role->getAttribute('id'), $this->anotherRole->getAttribute('id')]);
+        $this->userWithRoles
+            ->roles()
+            ->attach([
+                $this->role->getAttribute('id'),
+                $this->anotherRole->getAttribute('id')
+            ]);
     }
 
     /** @test */

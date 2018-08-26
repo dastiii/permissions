@@ -36,31 +36,73 @@ trait HasGroups
         return $this->belongsToMany(get_class($this->getGroupClass()));
     }
 
+    /**
+     * Adds a group to a user.
+     *
+     * @param GroupContract|int|string $group
+     *
+     * @return void
+     */
     public function addToGroup($group) : void
     {
-        if ($group instanceof GroupContract) {
-            $this->groups()->attach($group->id);
-
-            return;
-        }
-
-        if (is_int($group)) {
-            $this->groups()->attach($group);
-
-            return;
-        }
-
         $this->groups()->attach(
-            $this->getGroupClass()->findByName($group)->getAttribute('id')
+            is_string($group) ? $this->getGroupClass()->findByName($group) : $group
         );
-
-        return;
     }
 
+    /**
+     * Adds multiple groups to a user.
+     *
+     * @param mixed ...$groups
+     */
+    public function addToGroups(...$groups) : void
+    {
+        if (is_array($groups[0])) {
+            foreach($groups[0] as $group) {
+                $this->addToGroup($group);
+            }
+
+            return;
+        }
+
+        foreach($groups as $group) {
+            $this->addToGroup($group);
+        }
+    }
+
+    /**
+     * Removes a user from a group.
+     *
+     * @param GroupContract|int|string $group
+     *
+     * @return void
+     */
     public function removeFromGroup($group) : void
     {
-        $this->groups()->detach($group);
+        $this->groups()->detach(
+            is_string($group) ? $this->getGroupClass()->findByName($group) : $group
+        );
+    }
 
-        return;
+    /**
+     * Removes multiple groups from a user.
+     *
+     * @param mixed ...$groups
+     *
+     * @return void
+     */
+    public function removeFromGroups(...$groups) : void
+    {
+        if (is_array($groups[0])) {
+            foreach ($groups[0] as $group) {
+                $this->removeFromGroup($group);
+            }
+
+            return;
+        }
+
+        foreach ($groups as $group) {
+            $this->removeFromGroup($group);
+        }
     }
 }
