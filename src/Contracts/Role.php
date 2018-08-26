@@ -8,13 +8,6 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 interface Role
 {
     /**
-     * Permission relationship.
-     *
-     * @return MorphToMany
-     */
-    public function permissions() : MorphToMany;
-
-    /**
      * User relationship.
      *
      * @return BelongsToMany

@@ -32,7 +32,7 @@ class Permission extends Model implements PermissionContract
 
         return $this
             ->morphedByMany($userClass, 'model', 'model_permission')
-            ->withPivot('state', 'resource_id');
+            ->withPivot('is_granted', 'resource_id');
     }
 
     /**
@@ -46,7 +46,7 @@ class Permission extends Model implements PermissionContract
 
         return $this
             ->morphedByMany(get_class($roleClass), 'model', 'model_permission')
-            ->withPivot('state', 'resource_id');
+            ->withPivot('is_granted', 'resource_id');
     }
 
     /**
@@ -60,6 +60,18 @@ class Permission extends Model implements PermissionContract
 
         return $this
             ->morphedByMany(get_class($groupClass), 'model', 'model_permission')
-            ->withPivot('state', 'resource_id');
+            ->withPivot('is_granted', 'resource_id');
+    }
+
+    /**
+     * Returns a permission by its name.
+     *
+     * @param $name
+     *
+     * @return PermissionContract
+     */
+    public function findByName($name): PermissionContract
+    {
+        return static::whereName($name)->first();
     }
 }

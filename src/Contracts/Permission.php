@@ -26,4 +26,13 @@ interface Permission
      * @return MorphToMany
      */
     public function users() : MorphToMany;
+
+    /**
+     * Returns the permission by its name.
+     *
+     * @param $name
+     *
+     * @return Permission
+     */
+    public function findByName($name) : Permission;
 }

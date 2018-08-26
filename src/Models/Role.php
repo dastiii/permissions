@@ -2,6 +2,7 @@
 
 namespace dastiii\Permissions\Models;
 
+use dastiii\Permissions\Traits\HasPermissions;
 use Illuminate\Database\Eloquent\Model;
 use dastiii\Permissions\Contracts\Role as RoleContract;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -10,6 +11,8 @@ use dastiii\Permissions\Contracts\Permission as PermissionContract;
 
 class Role extends Model implements RoleContract
 {
+    use HasPermissions;
+
     /**
      * Mass-assignable fields.
      *
@@ -20,20 +23,6 @@ class Role extends Model implements RoleContract
         "weight",
         "is_default",
     ];
-
-    /**
-     * Permission relationship.
-     *
-     * @return MorphToMany
-     */
-    public function permissions() : MorphToMany
-    {
-        $permissionClass = app(PermissionContract::class);
-
-        return $this
-            ->morphToMany(get_class($permissionClass), 'model', 'model_permission')
-            ->withPivot('state', 'resource_id');
-    }
 
     /**
      * User relationship.

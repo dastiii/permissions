@@ -2,6 +2,7 @@
 
 namespace dastiii\Permissions\Models;
 
+use dastiii\Permissions\Traits\HasPermissions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -10,6 +11,8 @@ use dastiii\Permissions\Contracts\Permission as PermissionContract;
 
 class Group extends Model implements GroupContract
 {
+    use HasPermissions;
+
     /**
      * Mass-assignable fields.
      *
@@ -18,20 +21,6 @@ class Group extends Model implements GroupContract
     protected $fillable = [
         "name",
     ];
-
-    /**
-     * Permission relationship.
-     *
-     * @return MorphToMany
-     */
-    public function permissions() : MorphToMany
-    {
-        $permissionClass = app(PermissionContract::class);
-
-        return $this
-            ->morphToMany(get_class($permissionClass), 'model', 'model_permission')
-            ->withPivot('state', 'resource_id');
-    }
 
     /**
      * User relaitonship.
