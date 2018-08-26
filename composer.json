@@ -1,0 +1,28 @@
+{
+  "name": "dastiii/permissions",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tobias Schwarz",
+      "email": "mail@tobias-schwarz.me"
+    }
+  ],
+  "require": {},
+  "require-dev": {
+    "orchestra/testbench": "~3.3.0|~3.4.2|^3.5.0",
+    "phpunit/phpunit" : "^5.7|6.2|^7.0",
+    "mockery/mockery": "^1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "dastiii\\Permissions\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "dastiii\\Permissions\\Test\\": "tests"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
