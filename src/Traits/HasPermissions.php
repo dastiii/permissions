@@ -2,10 +2,10 @@
 
 namespace dastiii\Permissions\Traits;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use dastiii\Permissions\Contracts\Permission as PermissionContract;
-use Illuminate\Support\Facades\Cache;
 
 trait HasPermissions
 {
@@ -83,8 +83,6 @@ trait HasPermissions
      */
     public function grant($permission, $resourceId = null) : void
     {
-        $this->flushCache();
-
         $this->attachPermissionToModel($permission, true, $resourceId);
     }
 
@@ -98,8 +96,6 @@ trait HasPermissions
      */
     public function deny($permission, $resourceId = null) : void
     {
-        $this->flushCache();
-
         $this->attachPermissionToModel($permission, false, $resourceId);
     }
 
@@ -173,6 +169,8 @@ trait HasPermissions
      */
     protected function addPermission(PermissionContract $permission, bool $isGranted, $resourceId) : void
     {
+        $this->touch();
+
         $this->permissions()
             ->save($permission, [
                 'is_granted' => $isGranted,
@@ -191,6 +189,8 @@ trait HasPermissions
      */
     protected function updatePermission(PermissionContract $permission, bool $isGranted, $resourceId) : void
     {
+        $this->touch();
+
         $this->permissions()
             ->wherePivot('resource_id', $resourceId)
             ->updateExistingPivot($permission->id, [
