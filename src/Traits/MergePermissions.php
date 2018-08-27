@@ -9,26 +9,32 @@ trait MergePermissions
     /**
      * @var Collection
      */
-    protected $mergedPermissions;
+    public $mergedPermissions;
 
-    protected function mergePermissions()
+    public function mergePermissions()
     {
+        $this->mergedPermissions = collect();
+
         // Roles.
         $this->roles()->orderBy('weight')->get()
             ->each(function ($item) {
-                $item->permissions()->get()
-                    ->each(function ($item) {
-                        $this->mergeRolePermissionIn($item, true);
-                    });
+                $this->testMerge($item->permissions()->get());
+//                    ->each(function ($item) {
+//                        $this->mergeRolePermissionIn($item, true);
+//                    });
             });
 
         // Groups.
 
         // User.
     }
-//
+
+    protected function testMerge($collection)
+    {
+        $this->mergedPermissions = $this->mergedPermissions->merge($collection);
+    }
+
 //    protected function mergeRolePermissionIn(PermissionContract $permission)
 //    {
-//        if ($this->mergedPermissions->)
 //    }
 }

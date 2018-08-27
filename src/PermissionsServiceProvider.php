@@ -22,9 +22,5 @@ class PermissionsServiceProvider extends ServiceProvider
         $this->app->bind(RoleContract::class, Role::class);
         $this->app->bind(GroupContract::class, Group::class);
         $this->app->bind(PermissionContract::class, Permission::class);
-
-        $this->app->make(RoleContract::class)::observe(RoleObserver::class);
-        $this->app->make(GroupContract::class)::observe(GroupObserver::class);
-        $this->app->make(config('auth.providers.users.model'))::observe(UserObserver::class);
     }
 }

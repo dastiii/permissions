@@ -2,12 +2,11 @@
 
 namespace dastiii\Permissions\Models;
 
-use dastiii\Permissions\Traits\HasPermissions;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use dastiii\Permissions\Traits\HasPermissions;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use dastiii\Permissions\Contracts\Group as GroupContract;
-use dastiii\Permissions\Contracts\Permission as PermissionContract;
 
 class Group extends Model implements GroupContract
 {
@@ -21,6 +20,17 @@ class Group extends Model implements GroupContract
     protected $fillable = [
         "name",
     ];
+
+    /**
+     * Boot method.
+     */
+    protected static function boot() {
+        parent::boot();
+
+        static::saved(function($model) {
+            Cache::forget($model->getCacheKey());
+        });
+    }
 
     /**
      * User relaitonship.
