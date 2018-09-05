@@ -4,11 +4,8 @@ namespace dastiii\Permissions;
 
 use dastiii\Permissions\Models\Role;
 use dastiii\Permissions\Models\Group;
-use dastiii\Permissions\Observers\UserObserver;
 use Illuminate\Support\ServiceProvider;
 use dastiii\Permissions\Models\Permission;
-use dastiii\Permissions\Observers\RoleObserver;
-use dastiii\Permissions\Observers\GroupObserver;
 use dastiii\Permissions\Contracts\Role as RoleContract;
 use dastiii\Permissions\Contracts\Group as GroupContract;
 use dastiii\Permissions\Contracts\Permission as PermissionContract;

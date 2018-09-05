@@ -17,7 +17,7 @@ class Permission extends Model implements PermissionContract
      */
     protected $fillable = [
         'name',
-        'human_readable_name',
+        'display_name',
         'is_backend',
     ];
 
@@ -32,7 +32,7 @@ class Permission extends Model implements PermissionContract
 
         return $this
             ->morphedByMany($userClass, 'model', 'model_permission')
-            ->withPivot('is_granted', 'resource_id');
+            ->withPivot('is_granted');
     }
 
     /**
@@ -46,7 +46,7 @@ class Permission extends Model implements PermissionContract
 
         return $this
             ->morphedByMany(get_class($roleClass), 'model', 'model_permission')
-            ->withPivot('is_granted', 'resource_id');
+            ->withPivot('is_granted');
     }
 
     /**
@@ -60,7 +60,7 @@ class Permission extends Model implements PermissionContract
 
         return $this
             ->morphedByMany(get_class($groupClass), 'model', 'model_permission')
-            ->withPivot('is_granted', 'resource_id');
+            ->withPivot('is_granted');
     }
 
     /**

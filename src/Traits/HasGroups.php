@@ -58,14 +58,14 @@ trait HasGroups
     public function addToGroups(...$groups) : void
     {
         if (is_array($groups[0])) {
-            foreach($groups[0] as $group) {
+            foreach ($groups[0] as $group) {
                 $this->addToGroup($group);
             }
 
             return;
         }
 
-        foreach($groups as $group) {
+        foreach ($groups as $group) {
             $this->addToGroup($group);
         }
     }

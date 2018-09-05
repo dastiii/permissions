@@ -70,42 +70,39 @@ trait HasPermissions
     {
         return $this
             ->morphToMany(get_class($this->getPermissionClass()), 'model', 'model_permission')
-            ->withPivot('is_granted', 'resource_id');
+            ->withPivot('is_granted');
     }
 
     /**
      * Grants a permission to the model.
      *
      * @param PermissionContract|integer|string     $permission
-     * @param integer|null                          $resourceId
      *
      * @return void
      */
-    public function grant($permission, $resourceId = null) : void
+    public function grant($permission) : void
     {
-        $this->attachPermissionToModel($permission, true, $resourceId);
+        $this->attachPermissionToModel($permission, true);
     }
 
     /**
      * Denies a permission to the model.
      *
      * @param PermissionContract|integer|string     $permission
-     * @param integer|null                          $resourceId
      *
      * @return void
      */
-    public function deny($permission, $resourceId = null) : void
+    public function deny($permission) : void
     {
-        $this->attachPermissionToModel($permission, false, $resourceId);
+        $this->attachPermissionToModel($permission, false);
     }
 
     /**
      * @param PermissionContract $permission
-     * @param integer|null $resourceId
      *
      * @return bool
      */
-    public function hasPermission($permission, $resourceId = null) : bool
+    public function hasPermission($permission) : bool
     {
         $this->checkForCachedPermissions();
 
@@ -114,8 +111,8 @@ trait HasPermissions
 
         return $this->permissionCache
             ->where('id', $permission->id)
-            ->filter(function ($value) use ($resourceId) {
-                return $value->pivot->resource_id == $resourceId && $value->pivot->is_granted;
+            ->filter(function ($value) {
+                return (bool) $value->pivot->is_granted;
             })->count() > 0;
     }
 
@@ -124,37 +121,34 @@ trait HasPermissions
      *
      * @param PermissionContract|integer|string     $permission
      * @param bool                                  $isGranted
-     * @param integer|null                          $resourceId
      *
      * @return void
      */
-    protected function attachPermissionToModel($permission, bool $isGranted, $resourceId = null) : void
+    protected function attachPermissionToModel($permission, bool $isGranted) : void
     {
         $permission = $permission instanceof PermissionContract
             ? $permission : $this->getPermissionInstance($permission);
 
-        if ($this->permissionPivotExists($permission, $resourceId)) {
-            $this->updatePermission($permission, $isGranted, $resourceId);
+        if ($this->permissionPivotExists($permission)) {
+            $this->updatePermission($permission, $isGranted);
 
             return;
         }
 
-        $this->addPermission($permission, $isGranted, $resourceId);
+        $this->addPermission($permission, $isGranted);
     }
 
     /**
      * Checks if a pivot already exists
      *
      * @param  PermissionContract   $permission
-     * @param  integer|null         $resourceId
      *
      * @return boolean
      */
-    protected function permissionPivotExists(PermissionContract $permission, $resourceId) : bool
+    protected function permissionPivotExists(PermissionContract $permission) : bool
     {
         return $this->permissions()
             ->where('id', $permission->id)
-            ->wherePivot('resource_id', $resourceId)
             ->count() ? true : false;
     }
 
@@ -163,18 +157,16 @@ trait HasPermissions
      *
      * @param PermissionContract    $permission
      * @param boolean               $isGranted
-     * @param integer|null          $resourceId
      *
      * @return void
      */
-    protected function addPermission(PermissionContract $permission, bool $isGranted, $resourceId) : void
+    protected function addPermission(PermissionContract $permission, bool $isGranted) : void
     {
         $this->touch();
 
         $this->permissions()
             ->save($permission, [
                 'is_granted' => $isGranted,
-                'resource_id' => $resourceId,
             ]);
     }
 
@@ -183,16 +175,14 @@ trait HasPermissions
      *
      * @param PermissionContract    $permission
      * @param boolean               $isGranted
-     * @param integer|null          $resourceId
      *
      * @return void
      */
-    protected function updatePermission(PermissionContract $permission, bool $isGranted, $resourceId) : void
+    protected function updatePermission(PermissionContract $permission, bool $isGranted) : void
     {
         $this->touch();
 
         $this->permissions()
-            ->wherePivot('resource_id', $resourceId)
             ->updateExistingPivot($permission->id, [
                 'is_granted' => $isGranted,
             ]);

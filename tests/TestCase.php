@@ -40,11 +40,10 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
 
         $this->prepareDatabase();
 
-        $this->user = User::first();
-        $this->role = $this->app->make(RoleContract::class)->first();
-        $this->group = $this->app->make(GroupContract::class)->first();
-        $this->permission = $this->app->make(PermissionContract::class)->first();
-        //
+        $this->user = create(User::class);
+        $this->role = create(Role::class);
+        $this->group = create(Group::class);
+        $this->permission = create(Permission::class);
     }
 
     protected function getEnvironmentSetUp($app)
@@ -63,19 +62,6 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     {
         $this->loadLaravelMigrations(['--database' => 'sqlite']);
         $this->artisan('migrate', ['--database' => 'sqlite']);
-
-        $this->app->make(User::class)->create([
-            'name' => 'John Doe',
-            'email' => 'john@doe.com',
-            'password' => bcrypt('secret'),
-        ]);
-        $this->app->make(RoleContract::class)->create(['name' => 'Administrators', 'weight' => 100, 'is_default' => true]);
-        $this->app->make(GroupContract::class)->create(['name' => 'Moderators']);
-        $this->app->make(PermissionContract::class)->create([
-            'name' => 'users.create',
-            'human_readable_name' => 'Create Users',
-            'is_backend' => false
-        ]);
     }
 
     protected function getPackageProviders($app)

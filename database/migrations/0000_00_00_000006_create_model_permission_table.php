@@ -19,7 +19,6 @@ class CreateModelPermissionTable extends Migration
             $table->string('model_type');
             $table->unsignedInteger('model_id');
 
-            $table->unsignedInteger('resource_id')->nullable();
             $table->boolean('is_granted');
         });
     }

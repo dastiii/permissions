@@ -21,7 +21,10 @@
   "autoload-dev": {
     "psr-4": {
       "dastiii\\Permissions\\Test\\": "tests"
-    }
+    },
+    "files": [
+      "tests/helpers.php"
+    ]
   },
   "minimum-stability": "dev",
   "prefer-stable": true
