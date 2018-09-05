@@ -1,0 +1,109 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreatePermissionsTables extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('roles', function (Blueprint $table) {
+            $table->increments('id');
+
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->integer('weight');
+            $table->boolean('is_default');
+
+            $table->timestamps();
+        });
+
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->unsignedInteger('role_id');
+            $table->unsignedInteger('user_id');
+
+            $table->unique(['role_id', 'user_id']);
+
+            $table->timestamps();
+
+            $table->foreign('role_id')
+                ->references('id')
+                ->on('roles')
+                ->onDelete('cascade');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+        });
+
+        Schema::create('groups', function (Blueprint $table) {
+            $table->increments('id');
+
+            $table->string('name');
+            $table->text('description')->nullable();
+
+            $table->timestamps();
+        });
+
+        Schema::create('group_user', function (Blueprint $table) {
+            $table->unsignedInteger('group_id');
+            $table->unsignedInteger('user_id');
+
+            $table->unique(['group_id', 'user_id']);
+
+            $table->timestamps();
+
+            $table->foreign('group_id')
+                ->references('id')
+                ->on('groups')
+                ->onDelete('cascade');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+        });
+
+        Schema::create('permissions', function (Blueprint $table) {
+            $table->increments('id');
+
+            $table->string('name')->unique();
+            $table->string('display_name')->nullable();
+            $table->text('description')->nullable();
+            $table->boolean('is_backend');
+
+            $table->timestamps();
+        });
+
+        Schema::create('model_permission', function (Blueprint $table) {
+            $table->unsignedInteger('permission_id');
+
+            $table->string('model_type');
+            $table->unsignedInteger('model_id');
+
+            $table->boolean('is_granted');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('roles');
+        Schema::dropIfExists('role_user');
+        Schema::dropIfExists('groups');
+        Schema::dropIfExists('group_user');
+        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('model_permission');
+    }
+}

@@ -14,7 +14,13 @@ class PermissionsServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        if (! class_exists('CreatePermissionsTables')) {
+            $timestamp = date('Y_m_d_His', time());
+
+            $this->publishes([
+                __DIR__.'/../database/migrations/create_permissions_tables.php.stub' => $this->app->databasePath()."/migrations/{$timestamp}_create_permissions_tables.php",
+            ], 'migrations');
+        }
 
         $this->app->bind(RoleContract::class, Role::class);
         $this->app->bind(GroupContract::class, Group::class);

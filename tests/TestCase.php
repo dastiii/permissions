@@ -6,9 +6,6 @@ use dastiii\Permissions\Models\Role;
 use dastiii\Permissions\Models\Group;
 use dastiii\Permissions\Models\Permission;
 use dastiii\Permissions\PermissionsServiceProvider;
-use dastiii\Permissions\Contracts\Role as RoleContract;
-use dastiii\Permissions\Contracts\Group as GroupContract;
-use dastiii\Permissions\Contracts\Permission as PermissionContract;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -61,7 +58,9 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     protected function prepareDatabase()
     {
         $this->loadLaravelMigrations(['--database' => 'sqlite']);
-        $this->artisan('migrate', ['--database' => 'sqlite']);
+
+        include_once __DIR__.'/../database/migrations/create_permissions_tables.php.stub';
+        (new \CreatePermissionsTables())->up();
     }
 
     protected function getPackageProviders($app)
