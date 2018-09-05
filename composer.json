@@ -30,7 +30,7 @@
     "laravel": {
       "providers": [
           "dastiii\\Permissions\\PermissionsServiceProvider"
-      ],
+      ]
     }
   },
   "minimum-stability": "dev",
