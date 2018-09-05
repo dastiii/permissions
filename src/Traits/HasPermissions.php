@@ -2,8 +2,6 @@
 
 namespace dastiii\Permissions\Traits;
 
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use dastiii\Permissions\Contracts\Permission as PermissionContract;
 
@@ -13,11 +11,6 @@ trait HasPermissions
      * @var PermissionContract
      */
     protected $permissionClass;
-
-    /**
-     * @var Collection
-     */
-    protected $permissionCache;
 
     /**
      * Returns the Permission class from the service container.
@@ -104,13 +97,12 @@ trait HasPermissions
      */
     public function hasPermission($permission) : bool
     {
-        $this->checkForCachedPermissions();
-
         $permission = $permission instanceof PermissionContract
             ? $permission : $this->getPermissionInstance($permission);
 
-        return $this->permissionCache
+        return $this->permissions()
             ->where('id', $permission->id)
+            ->get()
             ->filter(function ($value) {
                 return (bool) $value->pivot->is_granted;
             })->count() > 0;
@@ -186,34 +178,5 @@ trait HasPermissions
             ->updateExistingPivot($permission->id, [
                 'is_granted' => $isGranted,
             ]);
-    }
-
-    /**
-     * Retrieve permissions from cache or load permissions and cache them.
-     *
-     * @return void
-     */
-    protected function checkForCachedPermissions() : void
-    {
-        if (Cache::has($this->getCacheKey())) {
-            $this->permissionCache = Cache::get($this->getCacheKey());
-
-            return;
-        }
-
-        Cache::forever(
-            $this->getCacheKey(),
-            $this->permissionCache = $this->permissions()->get()
-        );
-    }
-
-    /**
-     * Flushes the permissions cache.
-     *
-     * @return void
-     */
-    protected function flushCache() : void
-    {
-        Cache::forget($this->getCacheKey());
     }
 }

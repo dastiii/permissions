@@ -26,11 +26,12 @@ class Role extends Model implements RoleContract
     /**
      * Boot method.
      */
-    protected static function boot() {
+    protected static function boot()
+    {
         parent::boot();
 
-        static::saved(function($model) {
-            Cache::forget($model->getCacheKey());
+        static::saved(function ($model) {
+            Cache::tags($model->getCacheKey())->flush();
         });
     }
 
