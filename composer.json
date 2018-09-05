@@ -26,6 +26,13 @@
       "tests/helpers.php"
     ]
   },
+  "extra": {
+    "laravel": {
+      "providers": [
+          "dastiii\\Permissions\\PermissionsServiceProvider"
+      ],
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true
 }
