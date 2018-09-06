@@ -8,6 +8,8 @@ use dastiii\Permissions\Contracts\Permission as PermissionContract;
 
 trait MergePermissions
 {
+    use HasGroups, HasRoles, HasPermissions;
+
     /**
      * @var Collection
      */
