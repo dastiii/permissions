@@ -3,8 +3,8 @@
 namespace dastiii\Permissions\Test;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class RoleTest extends TestCase
 {
@@ -14,7 +14,7 @@ class RoleTest extends TestCase
         $this->assertInstanceOf(MorphToMany::class, $this->role->permissions());
         $this->assertInstanceOf(Collection::class, $this->role->getAttribute('permissions'));
     }
-    
+
     /** @test */
     public function it_has_a_user_relationship()
     {

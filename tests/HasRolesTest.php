@@ -19,7 +19,7 @@ class HasRolesTest extends TestCase
     protected $userWithRoles;
 
     /**
-     * Setup
+     * Setup.
      */
     public function setUp()
     {
@@ -41,7 +41,7 @@ class HasRolesTest extends TestCase
             ->roles()
             ->attach([
                 $this->role->getAttribute('id'),
-                $this->anotherRole->getAttribute('id')
+                $this->anotherRole->getAttribute('id'),
             ]);
     }
 
@@ -81,7 +81,6 @@ class HasRolesTest extends TestCase
 
         $this->assertTrue($this->user->fresh()->getAttribute('roles')->contains($this->role));
     }
-
 
     /** @test */
     public function it_can_attach_multiple_roles_to_a_user_at_once()
@@ -184,5 +183,4 @@ class HasRolesTest extends TestCase
 
         $this->assertTrue($this->userWithRoles->hasRole($this->role->getAttribute('name')));
     }
-
 }

@@ -33,13 +33,13 @@ trait HasPermissions
      */
     public function getCacheKey() : string
     {
-        return get_class($this) . '.permissions.' . $this->id;
+        return get_class($this).'.permissions.'.$this->id;
     }
 
     /**
      * Fetches the permission instance based of its id or name.
      *
-     * @param integer|string    $permission
+     * @param int|string    $permission
      *
      * @return PermissionContract
      */
@@ -69,7 +69,7 @@ trait HasPermissions
     /**
      * Grants a permission to the model.
      *
-     * @param PermissionContract|integer|string     $permission
+     * @param PermissionContract|int|string     $permission
      *
      * @return void
      */
@@ -81,7 +81,7 @@ trait HasPermissions
     /**
      * Denies a permission to the model.
      *
-     * @param PermissionContract|integer|string     $permission
+     * @param PermissionContract|int|string     $permission
      *
      * @return void
      */
@@ -111,7 +111,7 @@ trait HasPermissions
     /**
      * Attaches the permission to the model or updates the pivot data.
      *
-     * @param PermissionContract|integer|string     $permission
+     * @param PermissionContract|int|string     $permission
      * @param bool                                  $isGranted
      *
      * @return void
@@ -131,11 +131,11 @@ trait HasPermissions
     }
 
     /**
-     * Checks if a pivot already exists
+     * Checks if a pivot already exists.
      *
      * @param  PermissionContract   $permission
      *
-     * @return boolean
+     * @return bool
      */
     protected function permissionPivotExists(PermissionContract $permission) : bool
     {
@@ -145,10 +145,10 @@ trait HasPermissions
     }
 
     /**
-     * Adds the permission to the entity
+     * Adds the permission to the entity.
      *
      * @param PermissionContract    $permission
-     * @param boolean               $isGranted
+     * @param bool               $isGranted
      *
      * @return void
      */
@@ -163,10 +163,10 @@ trait HasPermissions
     }
 
     /**
-     * Updates the permission of the entity
+     * Updates the permission of the entity.
      *
      * @param PermissionContract    $permission
-     * @param boolean               $isGranted
+     * @param bool               $isGranted
      *
      * @return void
      */

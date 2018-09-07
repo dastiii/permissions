@@ -4,14 +4,14 @@ namespace dastiii\Permissions\Test;
 
 use Illuminate\Support\Collection;
 use dastiii\Permissions\Models\Role;
-use Illuminate\Support\Facades\Cache;
 use dastiii\Permissions\Models\Group;
+use Illuminate\Support\Facades\Cache;
 use dastiii\Permissions\Models\Permission;
 
 class MergePermissionsTest extends TestCase
 {
     /**
-     * SetUp
+     * SetUp.
      */
     public function setUp()
     {
@@ -90,14 +90,14 @@ class MergePermissionsTest extends TestCase
                     'id' => $permissionA->id,
                     'name' => $permissionA->name,
                     'isBackend' => $permissionA->is_backend,
-                    'isGranted' => true
+                    'isGranted' => true,
                 ],
 
                 $permissionB->name => [
                     'id' => $permissionB->id,
                     'name' => $permissionB->name,
                     'isBackend' => $permissionB->is_backend,
-                    'isGranted' => false
+                    'isGranted' => false,
                 ],
             ]));
 

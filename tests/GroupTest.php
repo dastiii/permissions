@@ -4,8 +4,8 @@ namespace dastiii\Permissions\Test;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use dastiii\Permissions\Contracts\Group as GroupContract;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class GroupTest extends TestCase
 {
@@ -30,5 +30,4 @@ class GroupTest extends TestCase
             app(GroupContract::class)->findByName($this->group->getAttribute('name'))->is($this->group)
         );
     }
-
 }

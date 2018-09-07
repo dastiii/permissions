@@ -34,5 +34,5 @@ interface Permission
      *
      * @return Permission
      */
-    public function findByName($name) : Permission;
+    public function findByName($name) : self;
 }

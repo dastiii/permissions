@@ -3,7 +3,6 @@
 namespace dastiii\Permissions\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 interface Group
 {
@@ -21,5 +20,5 @@ interface Group
      *
      * @return Group
      */
-    public function findByName(string $name) : Group;
+    public function findByName(string $name) : self;
 }

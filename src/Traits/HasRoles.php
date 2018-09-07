@@ -37,7 +37,7 @@ trait HasRoles
     }
 
     /**
-     * Attach a role to a user
+     * Attach a role to a user.
      *
      * @param RoleContract|int|string $role
      *
@@ -60,8 +60,6 @@ trait HasRoles
         $this->roles()->attach(
             $this->getRoleClass()->findByName($role)->getAttribute('id')
         );
-
-        return;
     }
 
     /**
@@ -84,8 +82,6 @@ trait HasRoles
         foreach ($roles as $role) {
             $this->attachRole($role);
         }
-
-        return;
     }
 
     /**
@@ -112,8 +108,6 @@ trait HasRoles
         $this->roles()->detach(
             $this->getRoleClass()->findByName($role)->getAttribute('id')
         );
-
-        return;
     }
 
     /**
@@ -136,8 +130,6 @@ trait HasRoles
         foreach ($roles as $role) {
             $this->detachRole($role);
         }
-
-        return;
     }
 
     /**

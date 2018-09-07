@@ -37,11 +37,11 @@ trait MergePermissions
      */
     public function getCacheTagsCacheKey()
     {
-        return get_class($this) . '.' . $this->id . '.permissions.cacheTags';
+        return get_class($this).'.'.$this->id.'.permissions.cacheTags';
     }
 
     /**
-     * Merges the users permissions (including his Role, Group and own permissions)
+     * Merges the users permissions (including his Role, Group and own permissions).
      *
      * @return void
      */
@@ -71,7 +71,7 @@ trait MergePermissions
     }
 
     /**
-     * Merges role permissions
+     * Merges role permissions.
      *
      * @return void
      */
@@ -93,7 +93,7 @@ trait MergePermissions
     }
 
     /**
-     * Merges group permissions
+     * Merges group permissions.
      *
      * @return void
      */
@@ -138,7 +138,7 @@ trait MergePermissions
     }
 
     /**
-     * Transforms the permission instance to an array (for mapWithKeys())
+     * Transforms the permission instance to an array (for mapWithKeys()).
      *
      * @param PermissionContract $permission
      *
@@ -153,7 +153,7 @@ trait MergePermissions
                 'display_name' => $permission->display_name,
                 'isBackend' => (bool) $permission->is_backend,
                 'isGranted' => (bool) $permission->pivot->is_granted,
-            ]
+            ],
         ];
     }
 

@@ -3,7 +3,6 @@
 namespace dastiii\Permissions\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 interface Role
 {
@@ -21,5 +20,5 @@ interface Role
      *
      * @return Role
      */
-    public function findByName(string $name) : Role;
+    public function findByName(string $name) : self;
 }
