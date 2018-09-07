@@ -37,7 +37,7 @@ trait MergePermissions
      */
     public function getCacheTagsCacheKey()
     {
-        return get_class($this).'.'.$this->id.'.permissions.cacheTags';
+        return get_class($this).'.'.$this->getAttribute('id').'.permissions.cacheTags';
     }
 
     /**
@@ -108,7 +108,7 @@ trait MergePermissions
                 $group->permissions()->get()->filter(function ($permission) {
                     if ($this->groupPermissions
                         ->filter(function ($groupPermission) use ($permission) {
-                            return $groupPermission['id'] === $permission->id
+                            return $groupPermission['id'] === $permission->getAttribute('id')
                                 && $groupPermission['isGranted'] === false;
                         })->isNotEmpty()) {
                         return false;
@@ -149,10 +149,10 @@ trait MergePermissions
     {
         return [
             $permission->name => [
-                'id' => $permission->id,
-                'name' => $permission->name,
-                'display_name' => $permission->display_name,
-                'isBackend' => (bool) $permission->is_backend,
+                'id' => $permission->getAttribute('id'),
+                'name' => $permission->getAttribute('name'),
+                'display_name' => $permission->getAttribute('display_name'),
+                'isBackend' => (bool) $permission->getAttribute('is_backend'),
                 'isGranted' => (bool) $permission->pivot->is_granted,
             ],
         ];
@@ -172,7 +172,7 @@ trait MergePermissions
         }
 
         return $this->mergedPermissions
-            ->whereStrict('id', $permission->id)
+            ->whereStrict('id', $permission->getAttribute('id'))
             ->whereStrict('isGranted', true)
             ->isNotEmpty();
     }

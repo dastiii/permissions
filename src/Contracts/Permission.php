@@ -4,7 +4,7 @@ namespace dastiii\Permissions\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
-interface Permission
+interface Permission extends Model
 {
     /**
      * Role relationship.

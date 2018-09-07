@@ -33,7 +33,7 @@ trait HasPermissions
      */
     public function getCacheKey() : string
     {
-        return get_class($this).'.permissions.'.$this->id;
+        return get_class($this).'.permissions.'.$this->getAttribute('id');
     }
 
     /**
@@ -99,7 +99,7 @@ trait HasPermissions
             ? $permission : $this->getPermissionInstance($permission);
 
         return $this->permissions()
-            ->where('id', $permission->id)
+            ->where('id', $permission->getAttribute('id'))
             ->get()
             ->filter(function ($value) {
                 return (bool) $value->pivot->is_granted;
@@ -138,7 +138,7 @@ trait HasPermissions
     protected function permissionPivotExists(PermissionContract $permission) : bool
     {
         return $this->permissions()
-            ->where('id', $permission->id)
+            ->where('id', $permission->getAttribute('id'))
             ->count() ? true : false;
     }
 
@@ -173,7 +173,7 @@ trait HasPermissions
         $this->touch();
 
         $this->permissions()
-            ->updateExistingPivot($permission->id, [
+            ->updateExistingPivot($permission->getAttribute('id'), [
                 'is_granted' => $isGranted,
             ]);
     }

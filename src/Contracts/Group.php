@@ -4,7 +4,7 @@ namespace dastiii\Permissions\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-interface Group
+interface Group extends Model
 {
     /**
      * User relationship.
