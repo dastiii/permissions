@@ -13,6 +13,14 @@ trait HasPermissions
     protected $permissionClass;
 
     /**
+     * Get an attribute from the model.
+     *
+     * @param  string  $key
+     * @return mixed
+     */
+    abstract public function getAttribute($key);
+
+    /**
      * Returns the Permission class from the service container.
      *
      * @return PermissionContract
