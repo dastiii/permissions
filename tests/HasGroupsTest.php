@@ -3,8 +3,8 @@
 namespace dastiii\Permissions\Test;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use dastiii\Permissions\Contracts\Group as GroupContract;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class HasGroupsTest extends TestCase
 {
@@ -19,14 +19,14 @@ class HasGroupsTest extends TestCase
     protected $userWithGroups;
 
     /**
-     * Setup
+     * Setup.
      */
     public function setUp()
     {
         parent::setUp();
 
         $this->anotherGroup = app(GroupContract::class)->create([
-            'name' => 'Another Group'
+            'name' => 'Another Group',
         ]);
 
         $this->userWithGroups = User::create([
@@ -45,7 +45,7 @@ class HasGroupsTest extends TestCase
         $this->assertInstanceOf(BelongsToMany::class, $this->user->groups());
         $this->assertInstanceOf(Collection::class, $this->user->getAttribute('groups'));
     }
-    
+
     /** @test */
     public function it_can_add_a_user_to_a_group()
     {
@@ -99,8 +99,6 @@ class HasGroupsTest extends TestCase
         $this->assertTrue($this->user->fresh()->getAttribute('groups')->contains($this->group));
         $this->assertTrue($this->user->fresh()->getAttribute('groups')->contains($this->anotherGroup));
     }
-
-
 
     /** @test */
     public function it_can_remove_a_user_from_a_group_using_the_group_instance()

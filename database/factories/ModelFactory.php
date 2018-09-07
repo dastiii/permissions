@@ -2,6 +2,7 @@
 
 $factory->define(dastiii\Permissions\Test\User::class, function (Faker\Generator $faker) {
     static $password;
+
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -15,7 +16,7 @@ $factory->define(\dastiii\Permissions\Models\Permission::class, function (Faker\
         'name' => strtolower($faker->unique()->word.'.'.$faker->word),
         'display_name' => implode(' ', $faker->words),
         'description' => $faker->text,
-        'is_backend' => $faker->boolean
+        'is_backend' => $faker->boolean,
     ];
 });
 
@@ -31,6 +32,6 @@ $factory->define(\dastiii\Permissions\Models\Role::class, function (Faker\Genera
         'name' => ucfirst($faker->unique()->word),
         'weight' => $faker->randomDigit,
         'description' => $faker->text,
-        'is_default' => $faker->boolean
+        'is_default' => $faker->boolean,
     ];
 });

@@ -41,7 +41,6 @@ class HasPermissionsTest extends TestCase
         $this->role->deny($this->permission);
     }
 
-
     /** @test */
     public function it_can_grant_permissions_to_a_role()
     {
@@ -94,7 +93,6 @@ class HasPermissionsTest extends TestCase
         $this->group->deny($this->permission);
     }
 
-
     /** @test */
     public function it_can_grant_permissions_to_a_group()
     {
@@ -138,7 +136,6 @@ class HasPermissionsTest extends TestCase
 
         $this->user->deny($this->permission);
     }
-
 
     /** @test */
     public function it_can_grant_permissions_to_a_user()

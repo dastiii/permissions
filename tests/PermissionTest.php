@@ -38,5 +38,4 @@ class PermissionTest extends TestCase
                 ->is($this->permission)
         );
     }
-
 }

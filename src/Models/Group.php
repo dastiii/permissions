@@ -5,8 +5,8 @@ namespace dastiii\Permissions\Models;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use dastiii\Permissions\Traits\HasPermissions;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use dastiii\Permissions\Contracts\Group as GroupContract;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Group extends Model implements GroupContract
 {
@@ -18,7 +18,7 @@ class Group extends Model implements GroupContract
      * @var array
      */
     protected $fillable = [
-        "name",
+        'name',
     ];
 
     /**

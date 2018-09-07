@@ -26,5 +26,4 @@ class MigrationsTest extends TestCase
         $this->assertTrue(Schema::hasTable('groups'));
         $this->assertTrue(Schema::hasTable('group_user'));
     }
-
 }

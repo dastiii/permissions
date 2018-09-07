@@ -3,8 +3,8 @@
 namespace dastiii\Permissions\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use dastiii\Permissions\Contracts\Role as RoleContract;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use dastiii\Permissions\Contracts\Group as GroupContract;
 use dastiii\Permissions\Contracts\Permission as PermissionContract;
 

@@ -19,10 +19,10 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     use HasRoles, HasGroups, HasPermissions, MergePermissions;
 
     /**
-    * The attributes that are mass assignable.
-    *
-    * @var array
-    */
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name',
         'email',
@@ -32,10 +32,11 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
     /**
      * Boot method.
      */
-    protected static function boot() {
+    protected static function boot()
+    {
         parent::boot();
 
-        static::saved(function($model) {
+        static::saved(function ($model) {
             Cache::forget($model->getCacheKey());
         });
     }
