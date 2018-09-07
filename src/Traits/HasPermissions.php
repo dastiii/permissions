@@ -49,9 +49,7 @@ trait HasPermissions
             return $this->getPermissionClass()->findByName($permission);
         }
 
-        if (is_int($permission)) {
-            return $this->getPermissionClass()->find($permission);
-        }
+        return $this->getPermissionClass()->find($permission);
     }
 
     /**
@@ -105,14 +103,14 @@ trait HasPermissions
             ->get()
             ->filter(function ($value) {
                 return (bool) $value->pivot->is_granted;
-            })->count() > 0;
+            })->isNotEmpty();
     }
 
     /**
      * Attaches the permission to the model or updates the pivot data.
      *
      * @param PermissionContract|int|string     $permission
-     * @param bool                                  $isGranted
+     * @param bool                              $isGranted
      *
      * @return void
      */

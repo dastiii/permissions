@@ -14,7 +14,7 @@ $factory->define(dastiii\Permissions\Test\User::class, function (Faker\Generator
 $factory->define(\dastiii\Permissions\Models\Permission::class, function (Faker\Generator $faker) {
     return [
         'name' => strtolower($faker->unique()->word.'.'.$faker->word),
-        'display_name' => implode(' ', $faker->words),
+        'display_name' => $faker->word.' '.$faker->word,
         'description' => $faker->text,
         'is_backend' => $faker->boolean,
     ];

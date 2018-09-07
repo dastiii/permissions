@@ -2,7 +2,7 @@
 
 namespace dastiii\Permissions\Contracts;
 
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Rbelations\MorphToMany;
 
 interface Permission
 {
