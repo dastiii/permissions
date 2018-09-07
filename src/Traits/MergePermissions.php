@@ -108,7 +108,8 @@ trait MergePermissions
                 $group->permissions()->get()->filter(function ($permission) {
                     if ($this->groupPermissions
                         ->filter(function ($groupPermission) use ($permission) {
-                            return $groupPermission['id'] === $permission->id && $groupPermission['isGranted'] === false;
+                            return $groupPermission['id'] === $permission->id
+                                && $groupPermission['isGranted'] === false;
                         })->isNotEmpty()) {
                         return false;
                     }
